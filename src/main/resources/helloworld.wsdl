@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<definitions
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="urn:org:acme:ws"
+        xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:org:acme:ws" name="HelloWorldImplService">
+    <types>
+        <xsd:schema targetNamespace="urn:org:acme:ws" xmlns:tns="urn:org:acme:ws"
+                    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:element name="who" type="xsd:string"></xsd:element>
+            <xsd:element name="what" type="xsd:string"></xsd:element>
+        </xsd:schema>
+    </types>
+    <message name="sayHelloWorld">
+        <part name="parameters" element="tns:who"/>
+    </message>
+    <message name="sayHelloWorldResponse">
+        <part name="parameters" element="tns:what"/>
+    </message>
+    <portType name="HelloWorld">
+        <operation name="sayHelloWorld">
+            <input message="tns:sayHelloWorld"/>
+            <output message="tns:sayHelloWorldResponse"/>
+        </operation>
+    </portType>
+    <binding name="HelloWorldImplPortBinding" type="tns:HelloWorld">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="sayHelloWorld">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="HelloWorldImplService">
+        <port name="HelloWorldImplPort" binding="tns:HelloWorldImplPortBinding">
+            <soap:address location="http://localhost:8080/ws/helloworld"/>
+        </port>
+    </service>
+</definitions>
